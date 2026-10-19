@@ -37,10 +37,16 @@ The original, Java-heavy implementation is the **reference**, not a template. Th
 - `portal/`, `smart-workflow-dashboard/`: imported market products. **Don't edit them.** The only exception is Portal configuration, if a feature needs it (ask first).
 - `main/pom.xml` already depends on `smart-workflow` and `smart-workflow-anthropic` (AI agent element). AI is optional and out of scope unless the user asks for it.
 ## Ivy file-format notes (for editing files directly)
-- Every DialogCall / UserTask whose flow continues **must** have the output mapping `"out" : "in"` (plus any result fields). Without it, the next element gets empty process data.
+- Process data passes through elements by default (`out = in`). The editor even removes an explicit `"out" : "in"` when that's the only mapping. Write it only next to other mappings (e.g. `out.order.items = result.cart`).
 - **Data class fields: never write `"modifiers" : [ ]`.** An empty modifiers list makes the field *non-persistent* (generated as `transient`), so its value is lost at every task switch. Leave the `modifiers` key out: the default is persistent. Check the generated `.java` has no `transient`.
 - Macros work in signal codes (boundary events). We link signals by business case: `pizza:delivered:<%=ivy.case.getBusinessCase().getId()%>`. Every task of one order shares the business case (Triggers attach to it).
 - Files edited outside the Ivy editor may not be reloaded by the designer engine. After an external edit to a process, ask the user to open it in the process editor and save (Ctrl+S) before testing.
+- Dialog method/start **input code** only knows `param` and `out` (no `in`). Script elements know both.
+- Form Editor facts (checked against the generated JSF in `main/target/dialog/...xhtml`. Always look there after writing a `.f.json`):
+  - DataTable row variable is `currentRow`. Column values must be full EL: `#{currentRow.pizza.name}`.
+  - Buttons inside a table column only update the table (`update="pizzaTable"`), not the rest of the form. Buttons outside update `@form`.
+  - DataTable `listener` does nothing on a non-editable table (no row-click event).
+  - Text `MARKDOWN` is printed as plain text, and there is **no image component**. Pictures need something outside the Form Editor.
 - **New folders are always lowercase** (e.g. `cms/images/pizzas/`). File names can stay as they are.
 - Processes go in `main/process/ch/frox/pizzaprocess/*.p.json` (the user's convention). Process references (Trigger, Sub call) use the path relative to `process/`, e.g. `ch/frox/pizzaprocess/PizzaProcess:orderReceived(...)`. Element ids are `<processId>-f<n>` / `-S<n>`. Keep the ids unique and the connectors (`connect`) consistent. Keep the layout readable (pools/lanes with sensible `visual.at` coordinates).
 - Data classes: `dataclass/**/*.d.json`. Dialogs: `dialog/**/` (`*.f.json` for forms, `*Data.d.json`, `*Process.p.json`).

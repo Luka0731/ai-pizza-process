@@ -19,15 +19,15 @@
 - [ ] Administrators can mange Pizza catalog (CRUDL)
 - [ ] Pizza staff should be able to see the pizza order details
 - [ ] delivery staff should be able to see delivery address
-- [ ] Implement DataBase
+- [x] Implement DataBase
 - [x] create Pizza catalog data model
 - [x] create Pizza orders data model
 - [ ] use AxonIvy mailing features for notifications
 #### PP1
-- [ ] a user shall see all available pizzas.
-- [ ] those pizzas shall be presented with a picture, description, price.
-- [ ] a user can search or filter pizzas, depending on name or price.
-- [ ] it must be possible to choose the ordering amount and add a item to the chart.
+- [x] a user shall see all available pizzas.
+- [/] those pizzas shall be presented with a picture, description, price. *(description + price done, picture still open: the Form Editor has no image component)*
+- [x] a user can search or filter pizzas, depending on name or price.
+- [x] it must be possible to choose the ordering amount and add a item to the chart.
 #### PP2
 - [ ] a user can browse its cart.
 - [ ] it shows a total in price.
@@ -44,7 +44,7 @@
 - [ ] Use Axon Ivy User Task to track deliveries.
 - [ ] assign them to the 3 Delivery Roles (West, East, Middle) the roles shall be identified using decision tables. based on ZIP (  < 3000 = West, < 8000, rest = East)
 #### PP6
-- [ ] the data generated is persisted in a database.
+- [x] the data generated is persisted in a database.
 #### PP7
 - [ ] Pizzas can be managed over a own process
 #### Opptional
@@ -67,9 +67,9 @@
 |---|---------|--------|----------------------|
 | F0 | Foundation: roles, test users, data classes | Base: roles/users, data models | `roles.yaml`, `users.yaml`, data classes (Pizza, OrderItem, Order, Address) |
 | F1 | Process skeleton (pools/lanes, empty tasks, runs end-to-end) | Base: business process, pools & lanes | ✅ Process editor: 2 pools/lanes, User Tasks, Trigger (message flows), Signal boundary event, task delay (timer) |
-| F2 | Pizza catalog + seed data | PP6, data model | Business Data (`ivy.repo`), seed start |
+| F2 | Pizza catalog + seed data | PP6, data model | ✅ Business Data (`ivy.repo`), Admin-only seed start, pictures in the CMS |
 | F3 | Admin CRUDL as its own process | PP7, Base: admin manages catalog | Form Editor (generated from data class) |
-| F4 | Select pizza: catalog list, picture, search/filter, amount, add to cart | PP1 | Form Editor DataTable + IvyScript filter |
+| F4 | Select pizza: catalog list, picture, search/filter, amount, add to cart | PP1 | ✅ (except picture) Form dialog `SelectPizza`: DataTable with sortable columns, ＋/－ per row, "In cart" column, name + min/max price filter (IvyScript) |
 | F5 | Cart & checkout with delivery address | PP2, Base: pizza choice + address | Form Editor, Order saved via Business Data |
 | F6 | Bake → deliver → receive payment (worker lanes) | Base: chef sees order, delivery sees address | User Tasks + forms, role-based responsibility |
 | F7 | Delivery region by ZIP (West/Middle/East) | PP5 | Decision table if Ivy 14 has one, otherwise an Alternative gateway |

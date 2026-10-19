@@ -1,0 +1,138 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/14.0/project/form.json",
+  "config" : {
+    "type" : "FORM",
+    "title" : "Our pizzas"
+  },
+  "components" : [ {
+      "cid" : "filters",
+      "type" : "Layout",
+      "config" : {
+        "id" : "filters",
+        "type" : "GRID",
+        "gridVariant" : "GRID4",
+        "components" : [ {
+            "cid" : "search",
+            "type" : "Input",
+            "config" : {
+              "id" : "search",
+              "label" : "Search by name",
+              "value" : "#{data.search}",
+              "listener" : "#{logic.filter}",
+              "updateOnChange" : true
+            }
+          }, {
+            "cid" : "minPrice",
+            "type" : "Input",
+            "config" : {
+              "id" : "minPrice",
+              "type" : "NUMBER",
+              "label" : "Min. price",
+              "value" : "#{data.minPrice}",
+              "decimalPlaces" : "2",
+              "symbol" : "CHF",
+              "listener" : "#{logic.filter}",
+              "updateOnChange" : true
+            }
+          }, {
+            "cid" : "maxPrice",
+            "type" : "Input",
+            "config" : {
+              "id" : "maxPrice",
+              "type" : "NUMBER",
+              "label" : "Max. price",
+              "value" : "#{data.maxPrice}",
+              "decimalPlaces" : "2",
+              "symbol" : "CHF",
+              "listener" : "#{logic.filter}",
+              "updateOnChange" : true
+            }
+          } ]
+      }
+    }, {
+      "cid" : "pizzaTable",
+      "type" : "DataTable",
+      "config" : {
+        "id" : "pizzaTable",
+        "value" : "#{data.items}",
+        "components" : [ {
+            "cid" : "colName",
+            "type" : "DataTableColumn",
+            "config" : {
+              "header" : "Pizza",
+              "value" : "#{currentRow.pizza.name}",
+              "sortable" : true
+            }
+          }, {
+            "cid" : "colDescription",
+            "type" : "DataTableColumn",
+            "config" : {
+              "header" : "Description",
+              "value" : "#{currentRow.pizza.description}"
+            }
+          }, {
+            "cid" : "colPrice",
+            "type" : "DataTableColumn",
+            "config" : {
+              "header" : "Price (CHF)",
+              "value" : "#{currentRow.pizza.price}",
+              "sortable" : true,
+              "width" : "120"
+            }
+          }, {
+            "cid" : "colAmount",
+            "type" : "DataTableColumn",
+            "config" : {
+              "header" : "In cart",
+              "value" : "#{currentRow.amount}",
+              "width" : "90"
+            }
+          }, {
+            "cid" : "colActions",
+            "type" : "DataTableColumn",
+            "config" : {
+              "asActionColumn" : true,
+              "width" : "130",
+              "components" : [ {
+                  "cid" : "remove",
+                  "type" : "Button",
+                  "config" : {
+                    "id" : "remove",
+                    "icon" : "pi pi-minus",
+                    "variant" : "SECONDARY",
+                    "action" : "#{logic.remove(currentRow)}"
+                  }
+                }, {
+                  "cid" : "add",
+                  "type" : "Button",
+                  "config" : {
+                    "id" : "add",
+                    "icon" : "pi pi-plus",
+                    "variant" : "PRIMARY",
+                    "action" : "#{logic.add(currentRow)}"
+                  }
+                } ]
+            }
+          } ]
+      }
+    }, {
+      "cid" : "footer",
+      "type" : "Layout",
+      "config" : {
+        "id" : "footer",
+        "type" : "FLEX",
+        "justifyContent" : "END",
+        "components" : [ {
+            "cid" : "toCart",
+            "type" : "Button",
+            "config" : {
+              "id" : "toCart",
+              "name" : "Go to cart",
+              "icon" : "pi pi-shopping-cart",
+              "variant" : "PRIMARY",
+              "action" : "#{logic.close}"
+            }
+          } ]
+      }
+    } ]
+}

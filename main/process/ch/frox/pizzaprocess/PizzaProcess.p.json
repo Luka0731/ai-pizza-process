@@ -29,10 +29,16 @@
       "type" : "DialogCall",
       "name" : "Select a pizza",
       "config" : {
-        "dialog" : "ch.frox.pizzaprocess.PlaceholderTask:start(String)",
+        "dialog" : "ch.frox.pizzaprocess.SelectPizza:start(List<ch.frox.pizzaprocess.model.OrderItem>)",
         "call" : {
           "map" : {
-            "param.step" : "\"Select a pizza\""
+            "param.cart" : "in.order.items"
+          }
+        },
+        "output" : {
+          "map" : {
+            "out" : "in",
+            "out.order.items" : "result.cart"
           }
         }
       },

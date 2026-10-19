@@ -1,0 +1,29 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/14.0/project/data-class.json",
+  "simpleName" : "SelectPizzaData",
+  "namespace" : "ch.frox.pizzaprocess.SelectPizza",
+  "fields" : [ {
+    "name" : "allItems",
+    "type" : "List<ch.frox.pizzaprocess.model.OrderItem>",
+    "comment" : "One line per active pizza, amount = how many are in the cart (0 = none)"
+  }, {
+    "name" : "items",
+    "type" : "List<ch.frox.pizzaprocess.model.OrderItem>",
+    "comment" : "Lines shown in the table (after search / price filter)"
+  }, {
+    "name" : "search",
+    "type" : "String"
+  }, {
+    "name" : "minPrice",
+    "type" : "Number",
+    "comment" : "Empty or 0 = no lower limit"
+  }, {
+    "name" : "maxPrice",
+    "type" : "Number",
+    "comment" : "Empty or 0 = no upper limit"
+  }, {
+    "name" : "cart",
+    "type" : "List<ch.frox.pizzaprocess.model.OrderItem>",
+    "comment" : "In: cart so far. Out: all lines with amount > 0"
+  } ]
+}

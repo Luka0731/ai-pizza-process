@@ -1,0 +1,254 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/14.0/project/process.json",
+  "id" : "1A2C3E4F5B6D70E7",
+  "kind" : "HTML_DIALOG",
+  "config" : {
+    "data" : "ch.frox.pizzaprocess.SelectPizza.SelectPizzaData"
+  },
+  "elements" : [ {
+      "id" : "f0",
+      "type" : "HtmlDialogStart",
+      "name" : "start(List<OrderItem>)",
+      "config" : {
+        "signature" : "start",
+        "input" : {
+          "params" : [
+            { "name" : "cart", "type" : "List<ch.frox.pizzaprocess.model.OrderItem>", "desc" : "Cart so far (empty for a new order)" }
+          ],
+          "map" : {
+            "out.cart" : "param.cart"
+          }
+        },
+        "result" : {
+          "params" : [
+            { "name" : "cart", "type" : "List<ch.frox.pizzaprocess.model.OrderItem>", "desc" : "The filled cart" }
+          ],
+          "map" : {
+            "result.cart" : "in.cart"
+          }
+        },
+        "guid" : "1A2C3E4F5B6D70F8"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 64 }
+      },
+      "connect" : [
+        { "id" : "f2", "to" : "f19" }
+      ]
+    }, {
+      "id" : "f19",
+      "type" : "Script",
+      "name" : "load catalog",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import ch.frox.pizzaprocess.model.Pizza;",
+            "import ch.frox.pizzaprocess.model.OrderItem;",
+            "",
+            "// one line per active pizza; take the amount over from the cart if the customer comes back",
+            "for (Pizza pizza : ivy.repo.search(Pizza.class).booleanField(\"active\").isTrue().limit(1000).execute().getAll()) {",
+            "  OrderItem line = new OrderItem();",
+            "  line.pizza = pizza;",
+            "  line.amount = 0;",
+            "  for (OrderItem inCart : in.cart) {",
+            "    if (inCart.pizza.id == pizza.id) {",
+            "      line.amount = inCart.amount;",
+            "    }",
+            "  }",
+            "  out.allItems.add(line);",
+            "}",
+            "out.items.addAll(out.allItems);"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 224, "y" : 64 }
+      },
+      "connect" : [
+        { "id" : "f20", "to" : "f1" }
+      ]
+    }, {
+      "id" : "f1",
+      "type" : "HtmlDialogEnd",
+      "visual" : {
+        "at" : { "x" : 352, "y" : 64 }
+      }
+    }, {
+      "id" : "f3",
+      "type" : "HtmlDialogMethodStart",
+      "name" : "filter()",
+      "config" : {
+        "signature" : "filter",
+        "guid" : "1A2C3E4F5B6D7109"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 160 }
+      },
+      "connect" : [
+        { "id" : "f6", "to" : "f5" }
+      ]
+    }, {
+      "id" : "f5",
+      "type" : "Script",
+      "name" : "filter by name and price",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import ch.frox.pizzaprocess.model.OrderItem;",
+            "",
+            "// an empty field (or 0 for the prices) means: no filter",
+            "String term = \"\";",
+            "if (in.search != null) {",
+            "  term = in.search.trim().toLowerCase();",
+            "}",
+            "boolean useMin = in.minPrice != null && in.minPrice > 0;",
+            "boolean useMax = in.maxPrice != null && in.maxPrice > 0;",
+            "",
+            "List<OrderItem> result = [];",
+            "for (OrderItem line : in.allItems) {",
+            "  boolean nameMatches = term.length() == 0 || line.pizza.name.toLowerCase().contains(term);",
+            "  boolean minMatches = !useMin || line.pizza.price >= in.minPrice;",
+            "  boolean maxMatches = !useMax || line.pizza.price <= in.maxPrice;",
+            "  if (nameMatches && minMatches && maxMatches) {",
+            "    result.add(line);",
+            "  }",
+            "}",
+            "out.items = result;",
+            "",
+            "// show a cleared price field as empty instead of 0.00",
+            "if (!useMin) {",
+            "  out.minPrice = null;",
+            "}",
+            "if (!useMax) {",
+            "  out.maxPrice = null;",
+            "}"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 224, "y" : 160 }
+      },
+      "connect" : [
+        { "id" : "f7", "to" : "f4" }
+      ]
+    }, {
+      "id" : "f4",
+      "type" : "HtmlDialogEnd",
+      "visual" : {
+        "at" : { "x" : 352, "y" : 160 }
+      }
+    }, {
+      "id" : "f8",
+      "type" : "HtmlDialogMethodStart",
+      "name" : "add(OrderItem)",
+      "config" : {
+        "signature" : "add",
+        "input" : {
+          "params" : [
+            { "name" : "line", "type" : "ch.frox.pizzaprocess.model.OrderItem", "desc" : "Table row that was clicked" }
+          ],
+          "map" : { },
+          "code" : [
+            "import ch.frox.pizzaprocess.model.OrderItem;",
+            "for (OrderItem line : out.allItems) {",
+            "  if (line.pizza.id == param.line.pizza.id) {",
+            "    line.amount = line.amount + 1;",
+            "  }",
+            "}"
+          ]
+        },
+        "guid" : "1A2C3E4F5B6D711A"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 256 }
+      },
+      "connect" : [
+        { "id" : "f10", "to" : "f9" }
+      ]
+    }, {
+      "id" : "f9",
+      "type" : "HtmlDialogEnd",
+      "visual" : {
+        "at" : { "x" : 352, "y" : 256 }
+      }
+    }, {
+      "id" : "f11",
+      "type" : "HtmlDialogMethodStart",
+      "name" : "remove(OrderItem)",
+      "config" : {
+        "signature" : "remove",
+        "input" : {
+          "params" : [
+            { "name" : "line", "type" : "ch.frox.pizzaprocess.model.OrderItem", "desc" : "Table row that was clicked" }
+          ],
+          "map" : { },
+          "code" : [
+            "import ch.frox.pizzaprocess.model.OrderItem;",
+            "for (OrderItem line : out.allItems) {",
+            "  if (line.pizza.id == param.line.pizza.id && line.amount > 0) {",
+            "    line.amount = line.amount - 1;",
+            "  }",
+            "}"
+          ]
+        },
+        "guid" : "1A2C3E4F5B6D712B"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 352 }
+      },
+      "connect" : [
+        { "id" : "f14", "to" : "f13" }
+      ]
+    }, {
+      "id" : "f13",
+      "type" : "HtmlDialogEnd",
+      "visual" : {
+        "at" : { "x" : 352, "y" : 352 }
+      }
+    }, {
+      "id" : "f16",
+      "type" : "HtmlDialogMethodStart",
+      "name" : "close()",
+      "config" : {
+        "signature" : "close",
+        "guid" : "1A2C3E4F5B6D713C"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 448 }
+      },
+      "connect" : [
+        { "id" : "f18", "to" : "f21" }
+      ]
+    }, {
+      "id" : "f21",
+      "type" : "Script",
+      "name" : "build cart",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import ch.frox.pizzaprocess.model.OrderItem;",
+            "",
+            "List<OrderItem> cart = [];",
+            "for (OrderItem line : out.allItems) {",
+            "  if (line.amount > 0) {",
+            "    cart.add(line);",
+            "  }",
+            "}",
+            "out.cart = cart;"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 224, "y" : 448 }
+      },
+      "connect" : [
+        { "id" : "f22", "to" : "f17" }
+      ]
+    }, {
+      "id" : "f17",
+      "type" : "HtmlDialogExit",
+      "visual" : {
+        "at" : { "x" : 352, "y" : 448 }
+      }
+    } ]
+}
