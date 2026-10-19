@@ -1,0 +1,87 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/14.0/project/process.json",
+  "id" : "1A2C3E4F5B6D70D6",
+  "config" : {
+    "data" : "ch.frox.pizzaprocess.CreateTestDataData"
+  },
+  "elements" : [ {
+      "id" : "f0",
+      "type" : "RequestStart",
+      "name" : "Create test data",
+      "config" : {
+        "signature" : "start",
+        "request" : {
+          "name" : "Create test data",
+          "description" : "Resets the pizza catalog to the 8 demo pizzas."
+        },
+        "permission" : {
+          "anonymous" : false,
+          "roles" : [
+            "Admin"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 64 }
+      },
+      "connect" : [
+        { "id" : "f3", "to" : "f2" }
+      ]
+    }, {
+      "id" : "f2",
+      "type" : "Script",
+      "name" : "create pizza catalog",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import ch.frox.pizzaprocess.model.Pizza;",
+            "",
+            "// start fresh, so this start can be run again",
+            "for (Pizza old : ivy.repo.search(Pizza.class).limit(1000).execute().getAll()) {",
+            "  ivy.repo.delete(old);",
+            "}",
+            "",
+            "// name | description | price (CHF) | picture in the CMS | recipe for the chef",
+            "List rows = [",
+            "  [\"Margherita\", \"Tomato sauce, mozzarella, fresh basil\", 11.49, \"/images/pizzas/Margherita\", \"250g dough, 24h cold proof. Tomato sauce, mozzarella. Basil goes on after the oven. 300°C, 8 minutes.\"],",
+            "  [\"Funghi\", \"Tomato sauce, mozzarella, mushrooms\", 13.99, \"/images/pizzas/Funghi\", \"Margherita base. Mushrooms sliced thin and put on raw, not pre fried. 300°C, 9 minutes.\"],",
+            "  [\"Pepperoni Diavola\", \"Tomato sauce, mozzarella, spicy salami, chilli oil\", 18.49, \"/images/pizzas/Pepperoni\", \"Tomato sauce, mozzarella, spicy salami. Chilli oil after the oven, never before, it burns.\"],",
+            "  [\"Quattro Formaggi\", \"Mozzarella, gorgonzola, taleggio, parmesan\", 18.99, \"/images/pizzas/QuattroFormaggi\", \"No tomato sauce. All four cheeses, parmesan last. 300°C, 8 minutes.\"],",
+            "  [\"Pepperoni\", \"Tomato sauce, mozzarella, salami\", 16.99, \"/images/pizzas/Pepperoni\", \"Margherita base without basil, salami on top. 300°C, 8 minutes.\"],",
+            "  [\"Veggie\", \"Tomato sauce, mozzarella, garlic, green and red peperoncini, black olives, onions\", 14.49, \"/images/pizzas/Veggie\", \"Margherita base. Vegetables thin, spread evenly. 300°C, 9 minutes.\"],",
+            "  [\"Ruccola\", \"Tomato sauce, mozzarella, ruccola\", 12.99, \"/images/pizzas/Ruccola\", \"Margherita base without basil. Ruccola goes on after the oven.\"],",
+            "  [\"Hawaii\", \"Tomato sauce, mozzarella, pineapple, ham slices, onions\", 18.49, \"/images/pizzas/Hawaii\", \"Margherita base without basil. Ham, pineapple, onions. 300°C, 9 minutes.\"]",
+            "];",
+            "",
+            "for (List row : rows) {",
+            "  Pizza pizza = new Pizza();",
+            "  pizza.name = row.get(0) as String;",
+            "  pizza.description = row.get(1) as String;",
+            "  pizza.price = row.get(2) as Number;",
+            "  pizza.imageUrl = row.get(3) as String;",
+            "  pizza.recipe = row.get(4) as String;",
+            "  pizza.active = true;",
+            "  // store, then write the Business Data id into the object itself, so later processes can use pizza.id",
+            "  pizza.id = ivy.repo.save(pizza).getId();",
+            "  ivy.repo.save(pizza);",
+            "}",
+            "",
+            "ivy.log.info(\"Pizza catalog created: \" + rows.size() + \" pizzas\");"
+          ]
+        },
+        "sudo" : true
+      },
+      "visual" : {
+        "at" : { "x" : 256, "y" : 64 }
+      },
+      "connect" : [
+        { "id" : "f4", "to" : "f1" }
+      ]
+    }, {
+      "id" : "f1",
+      "type" : "TaskEnd",
+      "visual" : {
+        "at" : { "x" : 416, "y" : 64 }
+      }
+    } ]
+}

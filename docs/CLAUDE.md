@@ -41,6 +41,7 @@ The original, Java-heavy implementation is the **reference**, not a template. Th
 - **Data class fields: never write `"modifiers" : [ ]`.** An empty modifiers list makes the field *non-persistent* (generated as `transient`), so its value is lost at every task switch. Leave the `modifiers` key out: the default is persistent. Check the generated `.java` has no `transient`.
 - Macros work in signal codes (boundary events). We link signals by business case: `pizza:delivered:<%=ivy.case.getBusinessCase().getId()%>`. Every task of one order shares the business case (Triggers attach to it).
 - Files edited outside the Ivy editor may not be reloaded by the designer engine. After an external edit to a process, ask the user to open it in the process editor and save (Ctrl+S) before testing.
+- **New folders are always lowercase** (e.g. `cms/images/pizzas/`). File names can stay as they are.
 - Processes go in `main/process/ch/frox/pizzaprocess/*.p.json` (the user's convention). Process references (Trigger, Sub call) use the path relative to `process/`, e.g. `ch/frox/pizzaprocess/PizzaProcess:orderReceived(...)`. Element ids are `<processId>-f<n>` / `-S<n>`. Keep the ids unique and the connectors (`connect`) consistent. Keep the layout readable (pools/lanes with sensible `visual.at` coordinates).
 - Data classes: `dataclass/**/*.d.json`. Dialogs: `dialog/**/` (`*.f.json` for forms, `*Data.d.json`, `*Process.p.json`).
 - Ivy 14 config schema: `https://json-schema.axonivy.com/14.0/...` (the original used 15.1 headers in places, so don't copy those).

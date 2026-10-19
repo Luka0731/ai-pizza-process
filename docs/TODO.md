@@ -9,8 +9,8 @@
 ### Requirements
 ![image](./attachments/process.png)
 #### Base
-- [ ] implement the provided by the customer business process
-- [ ] use pools and lanes
+- [x] implement the provided by the customer business process
+- [x] use pools and lanes
 - [x] create test users and appropriate roles
 - [ ] Implement Pizza Ordering Web Portal (use HTML Dialog)
 - [ ] customer should be able to select and order pizza from a catalog.
@@ -66,7 +66,7 @@
 | # | Feature | Covers | Planned Ivy built-in |
 |---|---------|--------|----------------------|
 | F0 | Foundation: roles, test users, data classes | Base: roles/users, data models | `roles.yaml`, `users.yaml`, data classes (Pizza, OrderItem, Order, Address) |
-| F1 | Process skeleton (pools/lanes, empty tasks, runs end-to-end) | Base: business process, pools & lanes | Process editor: User Tasks, Task Switch Gateway, Signal/Trigger |
+| F1 | Process skeleton (pools/lanes, empty tasks, runs end-to-end) | Base: business process, pools & lanes | ✅ Process editor: 2 pools/lanes, User Tasks, Trigger (message flows), Signal boundary event, task delay (timer) |
 | F2 | Pizza catalog + seed data | PP6, data model | Business Data (`ivy.repo`), seed start |
 | F3 | Admin CRUDL as its own process | PP7, Base: admin manages catalog | Form Editor (generated from data class) |
 | F4 | Select pizza: catalog list, picture, search/filter, amount, add to cart | PP1 | Form Editor DataTable + IvyScript filter |
