@@ -1,0 +1,32 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/14.0/project/data-class.json",
+  "simpleName" : "Address",
+  "namespace" : "ch.frox.pizzaprocess.model",
+  "comment" : "Delivery address and contact of the customer.",
+  "fields" : [ {
+    "name" : "fullName",
+    "type" : "String",
+    "modifiers" : [ ]
+  }, {
+    "name" : "email",
+    "type" : "String",
+    "modifiers" : [ ]
+  }, {
+    "name" : "phone",
+    "type" : "String",
+    "modifiers" : [ ]
+  }, {
+    "name" : "street",
+    "type" : "String",
+    "modifiers" : [ ]
+  }, {
+    "name" : "zip",
+    "type" : "String",
+    "comment" : "Swiss postal code, 4 digits. Decides the delivery region.",
+    "modifiers" : [ ]
+  }, {
+    "name" : "city",
+    "type" : "String",
+    "modifiers" : [ ]
+  } ]
+}

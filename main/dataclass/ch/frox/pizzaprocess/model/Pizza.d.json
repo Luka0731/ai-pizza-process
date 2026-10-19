@@ -1,0 +1,40 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/14.0/project/data-class.json",
+  "simpleName" : "Pizza",
+  "namespace" : "ch.frox.pizzaprocess.model",
+  "comment" : "A pizza in the catalog. Stored with Business Data (ivy.repo).",
+  "fields" : [ {
+    "name" : "id",
+    "type" : "String",
+    "comment" : "Business Data id, filled by ivy.repo.save()",
+    "modifiers" : [ ]
+  }, {
+    "name" : "name",
+    "type" : "String",
+    "modifiers" : [ ]
+  }, {
+    "name" : "description",
+    "type" : "String",
+    "modifiers" : [ ]
+  }, {
+    "name" : "price",
+    "type" : "Number",
+    "comment" : "Price in CHF",
+    "modifiers" : [ ]
+  }, {
+    "name" : "imageUrl",
+    "type" : "String",
+    "comment" : "Picture of the pizza (URL or CMS path, decided in F4)",
+    "modifiers" : [ ]
+  }, {
+    "name" : "recipe",
+    "type" : "String",
+    "comment" : "Shown to the pizza chef when baking",
+    "modifiers" : [ ]
+  }, {
+    "name" : "active",
+    "type" : "Boolean",
+    "comment" : "Inactive pizzas are hidden from the catalog but kept for old orders",
+    "modifiers" : [ ]
+  } ]
+}

@@ -11,7 +11,7 @@
 ### Base
 - [ ] implement the provided by the customer business process
 - [ ] use pools and lanes
-- [ ] create test users and appropriate roles
+- [x] create test users and appropriate roles
 - [ ] Implement Pizza Ordering Web Portal (use HTML Dialog)
 - [ ] customer should be able to select and order pizza from a catalog.
 - [ ] customer needs to provide pizza choice and delivery address
@@ -20,8 +20,8 @@
 - [ ] Pizza staff should be able to see the pizza order details
 - [ ] delivery staff should be able to see delivery address
 - [ ] Implement DataBase
-- [ ] create Pizza catalog data model
-- [ ] create Pizza orders data model
+- [x] create Pizza catalog data model
+- [x] create Pizza orders data model
 - [ ] use AxonIvy mailing features for notifications
 ### PP1
 - [ ] a user shall see all available pizzas.

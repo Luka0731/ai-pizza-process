@@ -1,0 +1,16 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/14.0/project/data-class.json",
+  "simpleName" : "OrderItem",
+  "namespace" : "ch.frox.pizzaprocess.model",
+  "comment" : "One line in the cart / order.",
+  "fields" : [ {
+    "name" : "pizza",
+    "type" : "ch.frox.pizzaprocess.model.Pizza",
+    "comment" : "Copy of the pizza at order time, so later catalog changes don't alter old orders",
+    "modifiers" : [ ]
+  }, {
+    "name" : "amount",
+    "type" : "Integer",
+    "modifiers" : [ ]
+  } ]
+}

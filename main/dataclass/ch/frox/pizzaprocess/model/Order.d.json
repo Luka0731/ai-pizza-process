@@ -1,0 +1,45 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/14.0/project/data-class.json",
+  "simpleName" : "Order",
+  "namespace" : "ch.frox.pizzaprocess.model",
+  "comment" : "A pizza order. Stored with Business Data (ivy.repo).",
+  "fields" : [ {
+    "name" : "id",
+    "comment" : "Business Data id, filled by ivy.repo.save()",
+    "modifiers" : [ ]
+  }, {
+    "name" : "customerUserName",
+    "comment" : "Ivy user who ordered, empty for guests",
+    "modifiers" : [ ]
+  }, {
+    "name" : "address",
+    "type" : "ch.frox.pizzaprocess.model.Address",
+    "modifiers" : [ ]
+  }, {
+    "name" : "items",
+    "type" : "List<ch.frox.pizzaprocess.model.OrderItem>",
+    "modifiers" : [ ]
+  }, {
+    "name" : "discountPercent",
+    "type" : "Integer",
+    "comment" : "10 for logged-in customers, otherwise 0",
+    "modifiers" : [ ]
+  }, {
+    "name" : "total",
+    "type" : "Number",
+    "comment" : "Total in CHF after discount",
+    "modifiers" : [ ]
+  }, {
+    "name" : "deliveryRole",
+    "comment" : "DeliveryWest, DeliveryMiddle or DeliveryEast (decided by zip)",
+    "modifiers" : [ ]
+  }, {
+    "name" : "status",
+    "comment" : "ORDERED, BAKED, DELIVERED, PAID",
+    "modifiers" : [ ]
+  }, {
+    "name" : "orderedAt",
+    "type" : "DateTime",
+    "modifiers" : [ ]
+  } ]
+}

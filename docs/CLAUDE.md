@@ -10,10 +10,10 @@
 ## What this project is
 A rebuild of an existing Axon Ivy pizza shop, done the **low-code way** with the tools that ship with Axon Ivy 14. It is a "vibe-code" experiment.
 The original, Java-heavy implementation is the **reference**, not a template. The goal is to meet the same requirements and then **compare** the two approaches.
-- Requirements + roadmap: [docs/TODO.md](docs/TODO.md) (tick the checkboxes when a feature is done)
-- BPMN given by the customer: [docs/attachments/process.png](docs/attachments/process.png)
-- Original implementation: [docs/attachments/pizza-process.zip](docs/attachments/pizza-process.zip). Extract it to the scratchpad to read it, never into the repo.
-- Comparison notes: [docs/COMPARISON.md](docs/COMPARISON.md) (write to it as you go, see below)
+- Requirements + roadmap: [docs/TODO.md](TODO.md) (tick the checkboxes when a feature is done)
+- BPMN given by the customer: [docs/attachments/process.png](attachments/process.png)
+- Original implementation: [docs/attachments/pizza-process.zip](attachments/pizza-process.zip). Extract it to the scratchpad to read it, never into the repo.
+- Comparison notes: [docs/COMPARISON.md](COMPARISON.md) (write to it as you go, see below)
 ## User context
 - The user is an apprentice. They know Camunda (open source) and are new to Axon Ivy. Explain Ivy concepts by mapping them to Camunda where that helps, and keep it short.
 - Tooling: Axon Ivy **14**, **VS Code** designer (not the old Eclipse designer).
@@ -40,6 +40,7 @@ The original, Java-heavy implementation is the **reference**, not a template. Th
 - Processes: `processes/**/*.p.json`. Element ids are `<processId>-f<n>` / `-S<n>`. Keep the ids unique and the connectors (`connect`) consistent. Keep the layout readable (pools/lanes with sensible `visual.at` coordinates).
 - Data classes: `dataclass/**/*.d.json`. Dialogs: `dialog/**/` (`*.f.json` for forms, `*Data.d.json`, `*Process.p.json`).
 - Ivy 14 config schema: `https://json-schema.axonivy.com/14.0/...` (the original used 15.1 headers in places, so don't copy those).
+- Ivy generates Java for each data class into `main/target/generated-sources/ivy-dataclass/`, but only when its file watcher notices the file. Files written by Claude are sometimes missed, and then you get "type ... not found" errors. After writing `.d.json` files, `touch` them, check that the `.java` appears, and touch the dependent classes last (e.g. Order after Address/OrderItem).
 - After generating or changing files, ask the user to open them in the Ivy editor and check that they render and validate. Use the VS Code diagnostics tool when it's available.
 ## Comparison log (docs/COMPARISON.md)
 For each feature, write one short entry:
