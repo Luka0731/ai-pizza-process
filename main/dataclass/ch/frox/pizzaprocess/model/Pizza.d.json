@@ -6,35 +6,28 @@
   "fields" : [ {
     "name" : "id",
     "type" : "String",
-    "comment" : "Business Data id, filled by ivy.repo.save()",
-    "modifiers" : [ ]
+    "comment" : "Business Data id, filled by ivy.repo.save()"
   }, {
     "name" : "name",
-    "type" : "String",
-    "modifiers" : [ ]
+    "type" : "String"
   }, {
     "name" : "description",
-    "type" : "String",
-    "modifiers" : [ ]
+    "type" : "String"
   }, {
     "name" : "price",
     "type" : "Number",
-    "comment" : "Price in CHF",
-    "modifiers" : [ ]
+    "comment" : "Price in CHF"
   }, {
     "name" : "imageUrl",
     "type" : "String",
-    "comment" : "Picture of the pizza (URL or CMS path, decided in F4)",
-    "modifiers" : [ ]
+    "comment" : "Picture of the pizza (URL or CMS path, decided in F4)"
   }, {
     "name" : "recipe",
     "type" : "String",
-    "comment" : "Shown to the pizza chef when baking",
-    "modifiers" : [ ]
+    "comment" : "Shown to the pizza chef when baking"
   }, {
     "name" : "active",
     "type" : "Boolean",
-    "comment" : "Inactive pizzas are hidden from the catalog but kept for old orders",
-    "modifiers" : [ ]
+    "comment" : "Inactive pizzas are hidden from the catalog but kept for old orders"
   } ]
 }

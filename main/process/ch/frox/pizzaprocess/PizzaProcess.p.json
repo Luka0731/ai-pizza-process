@@ -1,0 +1,436 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/14.0/project/process.json",
+  "id" : "1A2C3E4F5B6D70C5",
+  "config" : {
+    "data" : "ch.frox.pizzaprocess.PizzaProcessData"
+  },
+  "elements" : [ {
+      "id" : "f0",
+      "type" : "RequestStart",
+      "name" : "Hungry for pizza",
+      "config" : {
+        "signature" : "start",
+        "request" : {
+          "name" : "Order a pizza",
+          "description" : "Hungry? Order a pizza."
+        },
+        "case" : {
+          "name" : "Pizza order"
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 96 }
+      },
+      "connect" : [
+        { "id" : "f11", "to" : "f1" }
+      ]
+    }, {
+      "id" : "f1",
+      "type" : "DialogCall",
+      "name" : "Select a pizza",
+      "config" : {
+        "dialog" : "ch.frox.pizzaprocess.PlaceholderTask:start(String)",
+        "call" : {
+          "map" : {
+            "param.step" : "\"Select a pizza\""
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 232, "y" : 96 }
+      },
+      "connect" : [
+        { "id" : "f12", "to" : "f2" }
+      ]
+    }, {
+      "id" : "f2",
+      "type" : "DialogCall",
+      "name" : "Order a pizza",
+      "config" : {
+        "dialog" : "ch.frox.pizzaprocess.PlaceholderTask:start(String)",
+        "call" : {
+          "map" : {
+            "param.step" : "\"Order a pizza\""
+          }
+        },
+        "output" : {
+          "map" : {
+            "out" : "in",
+            "out.order.id" : "java.util.UUID.randomUUID().toString().replace(\"-\", \"\")",
+            "out.order.customerUserName" : "ivy.session.getSessionUserName()",
+            "out.order.status" : "\"ORDERED\"",
+            "out.order.orderedAt" : "new DateTime()"
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 384, "y" : 96 }
+      },
+      "connect" : [
+        { "id" : "f13", "to" : "f3" }
+      ]
+    }, {
+      "id" : "f3",
+      "type" : "TriggerCall",
+      "name" : "send pizza order",
+      "config" : {
+        "processCall" : "ch/frox/pizzaprocess/PizzaProcess:orderReceived(ch.frox.pizzaprocess.model.Order)",
+        "call" : {
+          "map" : {
+            "param.order" : "in.order"
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 536, "y" : 96 }
+      },
+      "connect" : [
+        { "id" : "f14", "to" : "f4" }
+      ]
+    }, {
+      "id" : "f4",
+      "type" : "Alternative",
+      "visual" : {
+        "at" : { "x" : 640, "y" : 96 }
+      },
+      "connect" : [
+        { "id" : "f15", "to" : "f5" }
+      ]
+    }, {
+      "id" : "f5",
+      "type" : "UserTask",
+      "name" : "Ask for the pizza",
+      "config" : {
+        "dialog" : "ch.frox.pizzaprocess.PlaceholderTask:start(String)",
+        "call" : {
+          "map" : {
+            "param.step" : "\"Ask for the pizza\""
+          }
+        },
+        "task" : {
+          "name" : "Where is my pizza?",
+          "description" : "Your pizza is taking long? Ask the pizza shop. (Order <%=in.order.id%>)",
+          "responsible" : {
+            "type" : "USER_FROM_ATTRIBUTE",
+            "script" : "in.order.customerUserName"
+          },
+          "delay" : "new Duration(0, 0, 0, 0, 1, 0)"
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 744, "y" : 96 },
+        "description" : "Delay: 60 minutes in the BPMN, 1 minute here for testing"
+      },
+      "boundaries" : [ {
+          "id" : "f6",
+          "type" : "SignalBoundaryEvent",
+          "name" : "pizza received",
+          "config" : {
+            "signalCode" : "pizza:delivered:<%=ivy.case.getBusinessCase().getId()%>"
+          },
+          "visual" : {
+            "at" : { "x" : 808, "y" : 106 }
+          },
+          "connect" : [
+            { "id" : "f18", "to" : "f8", "via" : [ { "x" : 839, "y" : 106 }, { "x" : 839, "y" : 96 } ] }
+          ]
+        } ],
+      "connect" : [
+        { "id" : "f16", "to" : "f7" }
+      ]
+    }, {
+      "id" : "f7",
+      "type" : "TriggerCall",
+      "name" : "where is my pizza?",
+      "config" : {
+        "processCall" : "ch/frox/pizzaprocess/PizzaProcess:whereIsMyPizza(ch.frox.pizzaprocess.model.Order)",
+        "call" : {
+          "map" : {
+            "param.order" : "in.order"
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 744, "y" : 216 }
+      },
+      "connect" : [
+        { "id" : "f17", "to" : "f4", "via" : [ { "x" : 640, "y" : 216 } ] }
+      ]
+    }, {
+      "id" : "f8",
+      "type" : "UserTask",
+      "name" : "Pay the pizza",
+      "config" : {
+        "dialog" : "ch.frox.pizzaprocess.PlaceholderTask:start(String)",
+        "call" : {
+          "map" : {
+            "param.step" : "\"Pay the pizza\""
+          }
+        },
+        "task" : {
+          "name" : "Your pizza is here! Pay it",
+          "description" : "Order <%=in.order.id%>",
+          "responsible" : {
+            "type" : "USER_FROM_ATTRIBUTE",
+            "script" : "in.order.customerUserName"
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 912, "y" : 96 }
+      },
+      "connect" : [
+        { "id" : "f19", "to" : "f9" }
+      ]
+    }, {
+      "id" : "f9",
+      "type" : "DialogCall",
+      "name" : "Eat the pizza",
+      "config" : {
+        "dialog" : "ch.frox.pizzaprocess.PlaceholderTask:start(String)",
+        "call" : {
+          "map" : {
+            "param.step" : "\"Eat the pizza\""
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 1064, "y" : 96 }
+      },
+      "connect" : [
+        { "id" : "f20", "to" : "f10" }
+      ]
+    }, {
+      "id" : "f10",
+      "type" : "TaskEnd",
+      "name" : "Hunger satisfied",
+      "visual" : {
+        "at" : { "x" : 1192, "y" : 96 }
+      }
+    }, {
+      "id" : "f30",
+      "type" : "RequestStart",
+      "name" : "\"Where is my pizza?\"",
+      "config" : {
+        "signature" : "whereIsMyPizza",
+        "input" : {
+          "params" : [
+            { "name" : "order", "type" : "ch.frox.pizzaprocess.model.Order", "desc" : "" }
+          ],
+          "map" : {
+            "out.order" : "param.order"
+          }
+        },
+        "request" : {
+          "isHttpRequestable" : false,
+          "isVisibleOnStartList" : false
+        },
+        "triggerable" : true,
+        "task" : {
+          "name" : "Customer asks for the pizza",
+          "responsible" : {
+            "roles" : [
+              "SYSTEM"
+            ]
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 600, "y" : 388 },
+        "icon" : "std:Signal"
+      },
+      "connect" : [
+        { "id" : "f33", "to" : "f31" }
+      ]
+    }, {
+      "id" : "f31",
+      "type" : "UserTask",
+      "name" : "Calm customer",
+      "config" : {
+        "dialog" : "ch.frox.pizzaprocess.PlaceholderTask:start(String)",
+        "call" : {
+          "map" : {
+            "param.step" : "\"Calm customer\""
+          }
+        },
+        "task" : {
+          "name" : "Calm the customer down",
+          "description" : "The customer asks where the pizza is. (Order <%=in.order.id%>)",
+          "responsible" : {
+            "roles" : [
+              "Clerk"
+            ]
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 744, "y" : 388 }
+      },
+      "connect" : [
+        { "id" : "f34", "to" : "f32" }
+      ]
+    }, {
+      "id" : "f32",
+      "type" : "TaskEnd",
+      "name" : "Customer calmed",
+      "visual" : {
+        "at" : { "x" : 912, "y" : 388 }
+      }
+    }, {
+      "id" : "f40",
+      "type" : "RequestStart",
+      "name" : "Order received",
+      "config" : {
+        "signature" : "orderReceived",
+        "input" : {
+          "params" : [
+            { "name" : "order", "type" : "ch.frox.pizzaprocess.model.Order", "desc" : "" }
+          ],
+          "map" : {
+            "out.order" : "param.order"
+          }
+        },
+        "request" : {
+          "isHttpRequestable" : false,
+          "isVisibleOnStartList" : false
+        },
+        "triggerable" : true,
+        "task" : {
+          "name" : "Pizza order received",
+          "responsible" : {
+            "roles" : [
+              "SYSTEM"
+            ]
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 536, "y" : 504 },
+        "icon" : "std:Signal"
+      },
+      "connect" : [
+        { "id" : "f46", "to" : "f41" }
+      ]
+    }, {
+      "id" : "f41",
+      "type" : "UserTask",
+      "name" : "Bake the pizza",
+      "config" : {
+        "dialog" : "ch.frox.pizzaprocess.PlaceholderTask:start(String)",
+        "call" : {
+          "map" : {
+            "param.step" : "\"Bake the pizza\""
+          }
+        },
+        "task" : {
+          "name" : "Bake the pizza",
+          "description" : "Order <%=in.order.id%>",
+          "responsible" : {
+            "roles" : [
+              "PizzaChef"
+            ]
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 744, "y" : 504 }
+      },
+      "connect" : [
+        { "id" : "f47", "to" : "f42", "via" : [ { "x" : 912, "y" : 504 } ] }
+      ]
+    }, {
+      "id" : "f42",
+      "type" : "UserTask",
+      "name" : "Deliver the pizza",
+      "config" : {
+        "dialog" : "ch.frox.pizzaprocess.PlaceholderTask:start(String)",
+        "call" : {
+          "map" : {
+            "param.step" : "\"Deliver the pizza\""
+          }
+        },
+        "task" : {
+          "name" : "Deliver the pizza",
+          "description" : "Order <%=in.order.id%>",
+          "responsible" : {
+            "roles" : [
+              "DeliveryBoy"
+            ]
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 912, "y" : 620 },
+        "description" : "F7 will assign this to DeliveryWest / Middle / East by zip"
+      },
+      "connect" : [
+        { "id" : "f48", "to" : "f43" }
+      ]
+    }, {
+      "id" : "f43",
+      "type" : "Script",
+      "name" : "pizza received",
+      "config" : {
+        "output" : {
+          "code" : [
+            "// tell the customer that the pizza arrived. The business case id links both sides of the same order",
+            "ivy.wf.signals().send(\"pizza:delivered:\" + ivy.case.getBusinessCase().getId());"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 1064, "y" : 620 },
+        "icon" : "std:Signal"
+      },
+      "connect" : [
+        { "id" : "f49", "to" : "f44" }
+      ]
+    }, {
+      "id" : "f44",
+      "type" : "DialogCall",
+      "name" : "Receive payment",
+      "config" : {
+        "dialog" : "ch.frox.pizzaprocess.PlaceholderTask:start(String)",
+        "call" : {
+          "map" : {
+            "param.step" : "\"Receive payment\""
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 1200, "y" : 620 }
+      },
+      "connect" : [
+        { "id" : "f50", "to" : "f45" }
+      ]
+    }, {
+      "id" : "f45",
+      "type" : "TaskEnd",
+      "name" : "Pizza delivered",
+      "visual" : {
+        "at" : { "x" : 1328, "y" : 620 }
+      }
+    } ],
+  "layout" : {
+    "lanes" : [ {
+        "name" : "Pizza Customer",
+        "offset" : 8,
+        "size" : 280,
+        "lanes" : [ ]
+      }, {
+        "name" : "Pizza Vendor",
+        "offset" : 40,
+        "size" : 352,
+        "lanes" : [ {
+            "name" : "Clerk",
+            "size" : 120
+          }, {
+            "name" : "Pizza Chef",
+            "size" : 112
+          }, {
+            "name" : "Delivery Boy",
+            "size" : 120
+          } ]
+      } ]
+  }
+}

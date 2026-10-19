@@ -1,4 +1,4 @@
-# TODO
+### TODO
 
 
 
@@ -6,9 +6,9 @@
 
 
 
-## Requirements
+### Requirements
 ![image](./attachments/process.png)
-### Base
+#### Base
 - [ ] implement the provided by the customer business process
 - [ ] use pools and lanes
 - [x] create test users and appropriate roles
@@ -23,31 +23,31 @@
 - [x] create Pizza catalog data model
 - [x] create Pizza orders data model
 - [ ] use AxonIvy mailing features for notifications
-### PP1
+#### PP1
 - [ ] a user shall see all available pizzas.
 - [ ] those pizzas shall be presented with a picture, description, price.
 - [ ] a user can search or filter pizzas, depending on name or price.
 - [ ] it must be possible to choose the ordering amount and add a item to the chart.
-### PP2
+#### PP2
 - [ ] a user can browse its cart.
 - [ ] it shows a total in price.
 - [ ] Items can still be removed or increased.
 - [ ] the cart can be checked out, in order to bill and deliver.
-### PP3
+#### PP3
 - [ ] a user can log into the app.
 - [ ] User can see their account details.
 - [ ] a logged user receives 10 % discount on orders.
-### PP4
+#### PP4
 - [ ] on the checkout order integrate the API of the POST. It shall fetch ZIP based on the entered city Name. (openplzapi.org)
-### PP5
+#### PP5
 - [ ] when a Pizza is created, delivery needs to be triggered.
 - [ ] Use Axon Ivy User Task to track deliveries.
 - [ ] assign them to the 3 Delivery Roles (West, East, Middle) the roles shall be identified using decision tables. based on ZIP (  < 3000 = West, < 8000, rest = East)
-### PP6
+#### PP6
 - [ ] the data generated is persisted in a database.
-### PP7
+#### PP7
 - [ ] Pizzas can be managed over a own process
-### Opptional
+#### Opptional
 - [ ] Use Hibernate to persists the pizza catalog and store the orders
 - [ ] create mock web service for simulating CRM system for storing the users there
 - [ ] integrate the process with this mock web service
@@ -62,7 +62,7 @@
 
 
 
-## Roadmap
+### Roadmap
 | # | Feature | Covers | Planned Ivy built-in |
 |---|---------|--------|----------------------|
 | F0 | Foundation: roles, test users, data classes | Base: roles/users, data models | `roles.yaml`, `users.yaml`, data classes (Pizza, OrderItem, Order, Address) |

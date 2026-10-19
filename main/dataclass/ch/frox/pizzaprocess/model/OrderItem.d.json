@@ -6,11 +6,9 @@
   "fields" : [ {
     "name" : "pizza",
     "type" : "ch.frox.pizzaprocess.model.Pizza",
-    "comment" : "Copy of the pizza at order time, so later catalog changes don't alter old orders",
-    "modifiers" : [ ]
+    "comment" : "Copy of the pizza at order time, so later catalog changes don't alter old orders"
   }, {
     "name" : "amount",
-    "type" : "Integer",
-    "modifiers" : [ ]
+    "type" : "Integer"
   } ]
 }

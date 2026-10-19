@@ -1,0 +1,10 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/14.0/project/data-class.json",
+  "simpleName" : "PizzaProcessData",
+  "namespace" : "ch.frox.pizzaprocess",
+  "comment" : "Process data of the main PizzaProcess (customer + vendor pools).",
+  "fields" : [ {
+    "name" : "order",
+    "type" : "ch.frox.pizzaprocess.model.Order"
+  } ]
+}

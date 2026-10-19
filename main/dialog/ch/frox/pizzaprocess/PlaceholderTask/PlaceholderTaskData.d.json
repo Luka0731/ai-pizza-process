@@ -1,0 +1,9 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/14.0/project/data-class.json",
+  "simpleName" : "PlaceholderTaskData",
+  "namespace" : "ch.frox.pizzaprocess.PlaceholderTask",
+  "fields" : [ {
+    "name" : "step",
+    "comment" : "Name of the process step this placeholder stands for"
+  } ]
+}

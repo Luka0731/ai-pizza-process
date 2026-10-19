@@ -5,28 +5,22 @@
   "comment" : "Delivery address and contact of the customer.",
   "fields" : [ {
     "name" : "fullName",
-    "type" : "String",
-    "modifiers" : [ ]
+    "type" : "String"
   }, {
     "name" : "email",
-    "type" : "String",
-    "modifiers" : [ ]
+    "type" : "String"
   }, {
     "name" : "phone",
-    "type" : "String",
-    "modifiers" : [ ]
+    "type" : "String"
   }, {
     "name" : "street",
-    "type" : "String",
-    "modifiers" : [ ]
+    "type" : "String"
   }, {
     "name" : "zip",
     "type" : "String",
-    "comment" : "Swiss postal code, 4 digits. Decides the delivery region.",
-    "modifiers" : [ ]
+    "comment" : "Swiss postal code, 4 digits. Decides the delivery region."
   }, {
     "name" : "city",
-    "type" : "String",
-    "modifiers" : [ ]
+    "type" : "String"
   } ]
 }

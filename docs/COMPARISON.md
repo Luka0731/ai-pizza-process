@@ -1,5 +1,5 @@
-# Projects Comparison
-Comparison between [highcode version](./attachments/pizza-process.zip) and lowcode version (this repo)
+### Projects Comparison
+Comparison between [highcode version](https://bitbucket.org/frox-ag/axon-ivy-learning-path/src/dev-luka/) and lowcode version (this repo)
 
 
 
@@ -7,7 +7,7 @@ Comparison between [highcode version](./attachments/pizza-process.zip) and lowco
 
 
 
-## Prediction for Out of Scope Features
+### Prediction for Out of Scope Features
 - custom design with css 
 - animations/sounds/logic with js, 
 - selfmade framework 
@@ -22,7 +22,7 @@ Comparison between [highcode version](./attachments/pizza-process.zip) and lowco
 
 
 
-## Table
+### Table
 | Feature |  Highcode version | Lowcode version | Notes | Lowcode limit hit? |
 |---------|-------------------|-----------------|-------|--------------------|
 | F0 Roles & users | `roles.yaml` + `users.yaml` | Same yaml files, copied 1:1 | Identical. This was already config in the original. | No |

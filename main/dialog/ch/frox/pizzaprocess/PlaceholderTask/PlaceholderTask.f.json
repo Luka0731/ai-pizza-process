@@ -1,0 +1,35 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/14.0/project/form.json",
+  "config" : {
+    "type" : "FORM",
+    "title" : "#{data.step}"
+  },
+  "components" : [ {
+      "cid" : "text1",
+      "type" : "Text",
+      "config" : {
+        "id" : "text1",
+        "type" : "RAW",
+        "content" : "#{data.step}: not built yet. This is a placeholder from the process skeleton (F1). Click Proceed to continue the process."
+      }
+    }, {
+      "cid" : "layout1",
+      "type" : "Layout",
+      "config" : {
+        "id" : "layout1",
+        "type" : "FLEX",
+        "justifyContent" : "END",
+        "components" : [ {
+            "cid" : "proceed",
+            "type" : "Button",
+            "config" : {
+              "id" : "proceed",
+              "name" : "Proceed",
+              "action" : "#{logic.close}",
+              "variant" : "PRIMARY",
+              "icon" : "pi pi-check"
+            }
+          } ]
+      }
+    } ]
+}

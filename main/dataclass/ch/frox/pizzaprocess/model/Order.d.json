@@ -5,41 +5,32 @@
   "comment" : "A pizza order. Stored with Business Data (ivy.repo).",
   "fields" : [ {
     "name" : "id",
-    "comment" : "Business Data id, filled by ivy.repo.save()",
-    "modifiers" : [ ]
+    "comment" : "Business Data id, filled by ivy.repo.save()"
   }, {
     "name" : "customerUserName",
-    "comment" : "Ivy user who ordered, empty for guests",
-    "modifiers" : [ ]
+    "comment" : "Ivy user who ordered, empty for guests"
   }, {
     "name" : "address",
-    "type" : "ch.frox.pizzaprocess.model.Address",
-    "modifiers" : [ ]
+    "type" : "ch.frox.pizzaprocess.model.Address"
   }, {
     "name" : "items",
-    "type" : "List<ch.frox.pizzaprocess.model.OrderItem>",
-    "modifiers" : [ ]
+    "type" : "List<ch.frox.pizzaprocess.model.OrderItem>"
   }, {
     "name" : "discountPercent",
     "type" : "Integer",
-    "comment" : "10 for logged-in customers, otherwise 0",
-    "modifiers" : [ ]
+    "comment" : "10 for logged-in customers, otherwise 0"
   }, {
     "name" : "total",
     "type" : "Number",
-    "comment" : "Total in CHF after discount",
-    "modifiers" : [ ]
+    "comment" : "Total in CHF after discount"
   }, {
     "name" : "deliveryRole",
-    "comment" : "DeliveryWest, DeliveryMiddle or DeliveryEast (decided by zip)",
-    "modifiers" : [ ]
+    "comment" : "DeliveryWest, DeliveryMiddle or DeliveryEast (decided by zip)"
   }, {
     "name" : "status",
-    "comment" : "ORDERED, BAKED, DELIVERED, PAID",
-    "modifiers" : [ ]
+    "comment" : "ORDERED, BAKED, DELIVERED, PAID"
   }, {
     "name" : "orderedAt",
-    "type" : "DateTime",
-    "modifiers" : [ ]
+    "type" : "DateTime"
   } ]
 }
